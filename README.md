@@ -9,7 +9,9 @@ Cast the queued spell semi automatically through /script CastQueued();
 Either use this as a separate macro, or bind it to your existing spells.
 
 Example:
+
 /script CastQueued();
+
 /cast Flash of Light
 
 
