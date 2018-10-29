@@ -10,8 +10,6 @@ Either use this as a separate macro, or bind it to your existing spells.
 
 Example:
 ----------------------
-/script CastQueued();
+>/script CastQueued();
 
-/cast Flash of Light
-----------------------
-
+>/cast Flash of Light
