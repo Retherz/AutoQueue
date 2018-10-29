@@ -66,8 +66,11 @@ function AutoQueue_SetCD()
 			AutoQueue_Cooldown = 300 - talent * 60;	
 		elseif(class=="PRIEST") then		
 		local _, _, _, _, talent , _ = GetTalentInfo(1, 15);
-		if(talent == nil) then AutoQueue_Cooldown = 99999999; end		
+		if(talent == nil) then 
+			DisableAddOn("AutoQueue");
+		else
 			AutoQueue_Cooldown = 180;
+			end
 		end
 	end
 end
