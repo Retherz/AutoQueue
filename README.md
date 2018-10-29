@@ -11,4 +11,5 @@ Either use this as a separate macro, or bind it to your existing spells.
 Example:
 
 /cast Flash of Light
+
 /script CastQueued();
