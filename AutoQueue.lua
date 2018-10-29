@@ -6,13 +6,13 @@ function AutoQueue()
 	if class=="PALADIN" then
 		DEFAULT_CHAT_FRAME:AddMessage("AutoQueue loaded.", 0.26, 0.97, 0.26);
 		this:RegisterEvent("CHAT_MSG_WHISPER");
-		this:RegisterEvent("UNIT_AURA");
+		this:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_BUFFS");
 		AutoQueue_SpellName = "Blessing of Protection";
 		AutoQueue_Keyword = "BOP";
 	elseif class=="PRIEST" then
 		DEFAULT_CHAT_FRAME:AddMessage("AutoQueue loaded.", 0.26, 0.97, 0.26);
 		this:RegisterEvent("CHAT_MSG_WHISPER");
-		this:RegisterEvent("UNIT_AURA");
+		this:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_BUFFS");
 		AutoQueue_SpellName = "Power Infusion";
 		AutoQueue_Keyword = "PI";
 		AutoQueue_Cooldown = 180;
@@ -20,7 +20,7 @@ function AutoQueue()
 end
 
 function AutoQueue_OnEvent()
-	if(hasCast and event == "UNIT_AURA" and AutoQueue_Target == arg1) then
+	if(hasCast and event == "CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_BUFFS" and arg1 == UnitName(AutoQueue_Target) .. " gains " .. AutoQueue_SpellName .. ".") then
 		AutoQueue_Clear(true);
 	end
 	if(arg1 == AutoQueue_Keyword) then
@@ -38,9 +38,6 @@ function AutoQueue_OnEvent()
 end
 
 function AutoQueue_Clear(refreshCooldown)
-	TargetUnit(AutoQueue_Target);
-	CastSpellByName(AutoQueue_SpellName);
-	TargetLastTarget();
 	AutoQueue_Target = nil;
 	if(refreshCooldown) then
 		AutoQueue_NextCast = GetTime() + AutoQueue_Cooldown;
@@ -57,7 +54,6 @@ function CastQueued()
 		hasCast = true;
 	elseif(AutoQueue_NextCast + 2 < GetTime()) then
 		AutoQueue_Clear(false);
-	end
 	end
 end
 
