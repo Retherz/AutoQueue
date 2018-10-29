@@ -21,12 +21,7 @@ end
 
 function AutoQueue_OnEvent()
 	if(hasCast and event == "UNIT_AURA" and AutoQueue_Target == arg1) then
-		TargetUnit(AutoQueue_Target);
-		CastSpellByName(AutoQueue_SpellName);
-		TargetLastTarget();
-		AutoQueue_Target = nil;
-		AutoQueue_NextCast = GetTime() + AutoQueue_Cooldown;
-		hasCast = false;
+		AutoQueue_Clear(true);
 	end
 	if(arg1 == AutoQueue_Keyword) then
 	AutoQueue_SetCD();
@@ -42,6 +37,17 @@ function AutoQueue_OnEvent()
 	end
 end
 
+function AutoQueue_Clear(refreshCooldown)
+	TargetUnit(AutoQueue_Target);
+	CastSpellByName(AutoQueue_SpellName);
+	TargetLastTarget();
+	AutoQueue_Target = nil;
+	if(refreshCooldown) then
+		AutoQueue_NextCast = GetTime() + AutoQueue_Cooldown;
+	end
+	hasCast = false;
+end
+
 function CastQueued()
 	if(AutoQueue_NextCast < GetTime() and AutoQueue_Target ~= nil) then
 		SpellStopCasting();
@@ -49,6 +55,9 @@ function CastQueued()
 		CastSpellByName(AutoQueue_SpellName);
 		TargetLastTarget();
 		hasCast = true;
+	elseif(AutoQueue_NextCast + 2 < GetTime()) then
+		AutoQueue_Clear(false);
+	end
 	end
 end
 
