@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: AutoQueue
+## Version: 1.0.0
+## Notes: Stores instructions for spellcast through whisper command.
+## DefaultState: enabled
+## Author: Retherz
+
+AutoQueue.xml
+AutoQueue.lua
